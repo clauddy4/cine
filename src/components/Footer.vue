@@ -7,21 +7,20 @@
             <img :src="images.sample" alt="Logo" />
           </a>
           <div class="footer-left-emails">
-            <a class="footer-email">swanky123@gmail.com</a>
-            <a class="footer-email">swanky@gmail.com</a>
+            <a class="footer-email">cine123@gmail.com</a>
+            <a class="footer-email">cine@gmail.com</a>
           </div>
         </div>
         <div class="footer-menu">
-          <ul class="footer-navigation">
+          <ul class="footer-navigation footer-navigation-left">
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'ff' }">Рецензии</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Movies' }">Фильмы</router-link></li>
-            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>
           </ul>
           <ul class="footer-navigation">
-            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
-            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
+            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>
+            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Articles' }">Поддержать</router-link></li>
           </ul>
         </div>
         <div class="footer-social">
@@ -50,6 +49,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@mixin footer-link {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 110%;
+  letter-spacing: 0.06em;
+  color: #f1ecff;
+  text-decoration: none;
+}
 footer {
   display: flex;
   align-items: center;
@@ -68,7 +77,7 @@ footer {
 }
 .footer-left-logo {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .footer-left-emails {
   display: flex;
@@ -94,6 +103,41 @@ footer {
   justify-content: space-between;
 }
 .footer-navigation {
+  display: flex;
+  flex-direction: column;
   list-style: none;
+}
+.footer-navigation-left {
+  margin-right: 230px;
+}
+.footer-navigation-item {
+  margin-bottom: 20px;
+}
+.footer-navigation-link {
+  @include footer-link;
+  text-transform: uppercase;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.footer-social {
+  display: flex;
+  flex-direction: column;
+}
+.footer-social-title {
+  @include footer-link;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.footer-social-links {
+  display: flex;
+  flex-direction: column;
+}
+.footer-social-link {
+  @include footer-link;
+  margin-bottom: 20px;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>
