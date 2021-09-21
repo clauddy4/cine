@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="main-navigation">
         <a class="main-header-logo">
-          <img :src="images.sample" alt="Logo" />
+          <img :src="require('@/assets/static/images/cine.svg')" alt="Logo" />
         </a>
         <ul class="site-navigation">
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
@@ -29,9 +29,6 @@ export default {
   name: "Header",
   data() {
     return {
-      images: {
-        sample: require('@/assets/static/images/cine.svg')
-      }
     }
   }
 };

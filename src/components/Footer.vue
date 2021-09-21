@@ -4,7 +4,7 @@
       <div class="footer-container">
         <div class="footer-left">
           <a class="footer-left-logo">
-            <img :src="images.sample" alt="Logo" />
+            <img :src="require('@/assets/static/images/cine.svg')" alt="Logo" />
           </a>
           <div class="footer-left-emails">
             <a class="footer-email">cine123@gmail.com</a>
@@ -39,11 +39,7 @@
 export default {
   name: "Footer",
   data() {
-    return {
-      images: {
-        sample: require('@/assets/static/images/cine.svg')
-      }
-    }
+    return {}
   }
 };
 </script>
