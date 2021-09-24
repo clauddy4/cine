@@ -136,4 +136,26 @@ footer {
     text-decoration: underline;
   }
 }
+@media (max-width: 1240px) {
+  .footer-navigation-left {
+    margin-right: 100px;
+  }
+}
+@media (max-width: 900px) {
+  .footer-menu {
+    display: none;
+  }
+}
+@media (max-width: 480px) {
+  footer {
+    height: 200px;
+  }
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-social {
+    display: none;
+  }
+}
 </style>
