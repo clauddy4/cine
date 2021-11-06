@@ -22,9 +22,22 @@ export default {
   margin: 0;
   padding: 0;
 }
+
+body {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  line-height: 110%;
+  color: #000000;
+}
+
 .container {
   max-width: 1400px;
   width: 100%;
   padding: 0 30px;
+}
+
+.link {
+  color: #000000;
+  text-decoration: none;
 }
 </style>
