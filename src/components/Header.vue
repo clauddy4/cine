@@ -9,7 +9,6 @@
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'ff' }">Рецензии</router-link></li>
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Movies' }">Фильмы</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>
           <li class="site-navigation-item">
             <a class="site-navigation-link" href="#">

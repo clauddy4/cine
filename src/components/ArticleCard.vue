@@ -12,12 +12,12 @@
       <router-link
         class="link article__link"
         :to="{ name: 'ArticleDetail', params: { id: article.id } }"
-        >{{ article.name }}</router-link
+        >{{ article.title }}</router-link
       >
     </h2>
     <div class="article__subtitle">
-      <p class="article__author">Иван Иванов</p>
-      <span class="article__date">20 / 08 / 2021 </span>
+      <span class="article__author">{{ article.author.name }} {{ article.author.lastname }}</span>
+      <span class="article__date">{{ article.createdAt }}</span>
     </div>
     <router-link
       class="link"
@@ -89,12 +89,15 @@ export default {
 }
 
 .article__subtitle {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 60px;
 }
 
 .article__author,
 .article__date {
   font-size: 18px;
+  line-height: 20px;
   letter-spacing: -0.1em;
   color: #444444;
 }

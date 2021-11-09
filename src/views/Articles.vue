@@ -1,13 +1,10 @@
 <template>
   <div class="main-container">
-    <!--    AAAAARRR-->
-    <!--    <ArticleCard-->
-    <!--      v-for="item in articles"-->
-    <!--      :key="item.id"-->
-    <!--      :article="item"-->
-    <!--    />-->
     <div class="content">
       <h1 class="content__title">РЕЦЕНЗИИ</h1>
+      <div v-for="post in posts" :key="post">
+        <p>{{post.title}}</p>
+      </div>
       <div class="content__article-container">
         <ArticleCard v-for="item in articles" :key="item.id" :article="item" />
         <!--        <div class="article">-->
@@ -59,15 +56,39 @@
 
 <script>
 import ArticleCard from "@/components/ArticleCard"
+
 export default {
   name: "Articles",
   components: {
-    ArticleCard
+    ArticleCard,
   },
   computed: {
     articles() {
       return this.$store.state.articles;
+    }
+  },
+
+  data() {
+    return {
+      posts: [],
+    };
+  },
+
+  methods: {
+    async getData() {
+      try {
+        const response = await this.$http.get(
+            "https://localhost:5001/api/article/new/",
+        );
+        this.$store.state.articles = response.data;
+        console.log(this.articles);
+      } catch (error) {
+        console.log(error);
+      }
     },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>
