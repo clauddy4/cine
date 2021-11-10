@@ -53,4 +53,18 @@ body {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+h2 {
+  font-size: 42px;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-decoration: underline;
+  margin-bottom: 40px;
+}
+
+h1 {
+  margin-bottom: 70px;
+  font-weight: bold;
+  font-size: 48px;
+}
 </style>

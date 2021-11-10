@@ -1,12 +1,4 @@
 <template>
-  <!--  <div-->
-  <!--    class="article-card"-->
-  <!--  >-->
-  <!--    <h2> {{article.name}} </h2>-->
-  <!--    <h3> {{article.description}} </h3>-->
-  <!--    <router-link :to="{ name: 'ArticleDetail', params: {id: article.id} }">Читать далее</router-link>-->
-
-  <!--  </div>-->
   <div class="article">
     <h2 class="article__title">
       <router-link
@@ -49,10 +41,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   max-width: 535px;
+  min-width: 535px;
   height: auto;
   margin-bottom: 60px;
   flex-grow: 1;
-  padding: 0 15px;
 }
 
 .article__title {
