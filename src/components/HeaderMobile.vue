@@ -8,7 +8,7 @@
     <ul class="menu__box">
       <li><router-link class="menu__item" :to="{ name: 'Home' }">Новое</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'Articles' }">Статьи</router-link></li>
-      <li><router-link class="menu__item" :to="{ name: 'ff' }">Рецензии</router-link></li>
+      <li><router-link class="menu__item" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'Movies' }">Фильмы</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'About' }">О проекте</router-link></li>
       <li>
@@ -32,7 +32,7 @@ export default {
 .hamburger-menu {
   display: none;
 }
-@media (max-width: 1180px) {
+@media (max-width: 991px) {
   .hamburger-menu {
     display: block;
   }

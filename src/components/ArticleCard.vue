@@ -9,14 +9,14 @@
     </h2>
     <div class="article__subtitle">
       <span class="article__author">{{ article.author.name }} {{ article.author.lastname }}</span>
-      <span class="article__date">{{ article.createdAt }}</span>
+      <span class="article__date">{{ article.createdAt | formatDate}}</span>
     </div>
     <router-link
       class="link"
       :to="{ name: 'ArticleDetail', params: { id: article.id } }"
     >
       <img
-        :src="require('@/assets/static/images/article.png')"
+        :src="require('/Users/tatyana/projects/cine-backend/static' + article.thumbnailImage)"
         alt="Article image"
         width="400"
         height="220"
@@ -41,10 +41,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   max-width: 535px;
-  min-width: 535px;
   height: auto;
   margin-bottom: 60px;
   flex-grow: 1;
+  padding: 0 15px;
 }
 
 .article__title {
@@ -56,28 +56,17 @@ export default {
 }
 
 .article__link {
-  display: inline-block;
   position: relative;
   overflow: hidden;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 3px;
+  transition: background-size 0.4s;
 }
 
-.article__link:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #000000;
-  opacity: 0;
-  transition: opacity 300ms, transform 300ms;
-  transform: translate3d(-100%, 0, 0);
-}
-
-.article__link:hover::after,
-.article__link:focus::after {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+.article__link:hover, .article__link:focus {
+  background-size: 100% 3px;
 }
 
 .article__subtitle {

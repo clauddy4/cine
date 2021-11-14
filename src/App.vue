@@ -31,7 +31,7 @@ body {
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 1200px;
   width: 100%;
   padding: 0 30px;
 }
@@ -54,17 +54,41 @@ body {
   overflow: hidden;
 }
 
-h2 {
-  font-size: 42px;
-  font-weight: 400;
-  text-transform: uppercase;
-  text-decoration: underline;
-  margin-bottom: 40px;
+//h2 {
+//  font-size: 42px;
+//  font-weight: 400;
+//  text-transform: uppercase;
+//  text-decoration: underline;
+//  margin-bottom: 40px;
+//}
+//
+//h1 {
+//  margin-bottom: 70px;
+//  font-weight: bold;
+//  font-size: 48px;
+//}
+
+.main-container {
+  max-width: 1200px;
+  margin: 130px auto;
 }
 
-h1 {
+.content {
+  padding: 0 15px;
+}
+
+.content__title {
   margin-bottom: 70px;
+  padding-left: 15px;
   font-weight: bold;
   font-size: 48px;
+  text-transform: uppercase;
+}
+
+.content__article-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>

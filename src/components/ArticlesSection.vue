@@ -22,19 +22,13 @@ export default {
       return this.$store.state.articles.articles;
     },
   },
-  created() {
-    // обращаемся к стору, вызываем метод getArticles оттуда, будет нужен, но попозже
-    // this.$store.dispatch('articles/getArticles')
-  }
 }
 </script>
 
-<style lang="scss" scoped>
-.articles {
-  &__wrap {
+<style scoped>
+.articles__wrap {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
 }
 </style>

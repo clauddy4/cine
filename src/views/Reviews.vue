@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="content">
-      <h1 class="content__title">Статьи</h1>
+      <h1 class="content__title">Рецензии</h1>
       <ArticlesSection />
     </div>
   </div>
@@ -12,31 +12,17 @@
 import ArticlesSection from "../components/ArticlesSection";
 
 export default {
-  name: "Articles",
+  name: "Reviews",
   components: {
     ArticlesSection
     // ArticleCard,
   },
   created() {
     // обращаемся к стору, вызываем метод getArticles оттуда, будет нужен, но попозже
-    this.$store.dispatch('articles/getArticles')
+    this.$store.dispatch('articles/getReviews')
   }
 };
 </script>
 
 <style scoped lang="scss">
-.content__title {
-  margin-bottom: 70px;
-  padding-left: 15px;
-  font-weight: bold;
-  font-size: 48px;
-  text-transform: uppercase;
-}
-
-.content__article-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
 </style>

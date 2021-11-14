@@ -3,9 +3,9 @@
     <div class="container">
       <div class="footer-container">
         <div class="footer-left">
-          <a class="footer-left-logo">
+          <router-link class="footer-left-logo" :to="{ name: 'Home' }">
             <img :src="require('@/assets/static/images/cine.svg')" alt="Logo" />
-          </a>
+          </router-link>
           <div class="footer-left-emails">
             <a class="footer-email">cine123@gmail.com</a>
             <a class="footer-email">cine@gmail.com</a>
@@ -15,7 +15,7 @@
           <ul class="footer-navigation footer-navigation-left">
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
-            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'ff' }">Рецензии</router-link></li>
+            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Movies' }">Фильмы</router-link></li>
           </ul>
           <ul class="footer-navigation">
@@ -141,7 +141,7 @@ footer {
     margin-right: 100px;
   }
 }
-@media (max-width: 900px) {
+@media (max-width: 991px) {
   .footer-menu {
     display: none;
   }

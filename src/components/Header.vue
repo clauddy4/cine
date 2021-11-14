@@ -2,13 +2,13 @@
   <header class="main-header">
     <div class="container">
       <nav class="main-navigation">
-        <a class="main-header-logo">
+        <router-link class="main-header-logo" :to="{ name: 'Home' }">
           <img :src="require('@/assets/static/images/cine.svg')" alt="Logo" />
-        </a>
+        </router-link>
         <ul class="site-navigation">
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'ff' }">Рецензии</router-link></li>
+          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>
           <li class="site-navigation-item">
             <a class="site-navigation-link" href="#">
@@ -42,6 +42,7 @@ export default {
   line-height: 110%;
   color: #f1ecff;
 }
+
 header {
   display: flex;
   align-items: center;
@@ -50,14 +51,17 @@ header {
   height: 100px;
   background: #112877;
 }
+
 .main-navigation {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .main-header-logo {
   text-align: left;
 }
+
 .site-navigation {
   display: flex;
   flex-direction: row;
@@ -65,12 +69,15 @@ header {
   justify-content: center;
   list-style: none;
 }
+
 .site-navigation-item {
-  margin-right: 80px;
+  margin-right: 50px;
 }
+
 .site-navigation-item:last-child {
   margin-right: 0;
 }
+
 .site-navigation-link {
   @include menu-link;
   display: flex;
@@ -79,11 +86,17 @@ header {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
 }
-@media (max-width: 1180px) {
+
+.site-navigation-link:hover {
+  text-decoration: underline;
+}
+
+.site-navigation-link.router-link-exact-active {
+  text-decoration: underline;
+}
+
+@media (max-width: 991px) {
   .site-navigation {
     display: none;
   }
