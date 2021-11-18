@@ -8,7 +8,7 @@
       >
     </h2>
     <div class="article__subtitle">
-      <span class="article__author">{{ article.author.name }} {{ article.author.lastname }}</span>
+      <span class="article__author">{{ article.user.firstName }} {{ article.user.lastName }}</span>
       <span class="article__date">{{ article.createdAt | formatDate}}</span>
     </div>
     <router-link
@@ -16,7 +16,7 @@
       :to="{ name: 'ArticleDetail', params: { id: article.id } }"
     >
       <img
-        :src="require('@/assets/static/images/' + article.thumbnailImage)"
+        :src="require('@/assets/static' + article.thumbnailImage)"
         alt="Article image"
         width="400"
         height="220"

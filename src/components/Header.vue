@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="main-navigation">
         <router-link class="main-header-logo" :to="{ name: 'Home' }">
-          <img :src="require('@/assets/static/images/cine.svg')" alt="Logo" />
+          <img :src="require('@/assets/static/img/cine.svg')" alt="Logo" />
         </router-link>
         <ul class="site-navigation">
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>

@@ -11,7 +11,7 @@ Vue.prototype.$http = axios;
 
 Vue.filter('formatDate', function(value) {
   if (value) {
-    return moment(String(value)).subtract(10, 'days').calendar().replaceAll('/', " / ");
+    return moment(String(value)).subtract(100, 'days').calendar().replaceAll('/', " / ");
   }
 });
 

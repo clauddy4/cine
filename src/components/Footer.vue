@@ -4,7 +4,7 @@
       <div class="footer-container">
         <div class="footer-left">
           <router-link class="footer-left-logo" :to="{ name: 'Home' }">
-            <img :src="require('@/assets/static/images/cine.svg')" alt="Logo" />
+            <img :src="require('@/assets/static/img/cine.svg')" alt="Logo" />
           </router-link>
           <div class="footer-left-emails">
             <a class="footer-email">cine123@gmail.com</a>

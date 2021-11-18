@@ -4,10 +4,20 @@
       <h1 class="article__title">{{ article.title }}</h1>
       <div class="article__subtitle">
 <!--       почему-то ругается на имя и фамилию автора-->
-        <span class="article__author">{{ article.author.name }} {{ article.author.lastname }}</span>
+        <span class="article__author">{{ article.user.firstName }} {{ article.user.lastName }}</span>
         <span class="article__date">{{ article.createdAt | formatDate }}</span>
       </div>
       <div class="article__content">
+        <p class="article__text">
+          {{ article.content }}
+        </p>
+        <img
+            :src="require('@/assets/static' + article.image)"
+            alt="Article image"
+            width="800"
+            height="440"
+            class="article__image"
+        />
         <p class="article__text">
           {{ article.content }}
         </p>
@@ -63,6 +73,11 @@ export default {
 
 .article__content {
   margin-bottom: 100px;
+}
+
+.article__image {
+  display: block;
+  margin: 40px auto;
 }
 
 .article__text {

@@ -73,7 +73,8 @@ export default {
 
         getReviews({commit}) {
             return axios.get('https://localhost:5001/api/article/category?type=0').then(({data}) => {
-                commit('SET_REVIEWS', data.reviews);
+                commit('SET_REVIEWS', data.articles);
+                console.log(data.articles);
                 return data;
             })
         },
