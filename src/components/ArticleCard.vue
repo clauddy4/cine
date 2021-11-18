@@ -16,7 +16,7 @@
       :to="{ name: 'ArticleDetail', params: { id: article.id } }"
     >
       <img
-        :src="require('/Users/tatyana/projects/cine-backend/static' + article.thumbnailImage)"
+        :src="require('@/assets/static/images/' + article.thumbnailImage)"
         alt="Article image"
         width="400"
         height="220"
