@@ -5,7 +5,7 @@
       <h2 class="content__section-title">
         <router-link class="content__section-link" :to="{ name: 'Articles' }">Статьи</router-link>
       </h2>
-      <ArticlesSection />
+      <ArticlesSection :articles="articles" />
       <h2 class="content__section-title">
         <router-link class="content__section-link" :to="{ name: 'Reviews' }">Рецензии</router-link>
       </h2>
@@ -23,14 +23,18 @@ export default {
     ReviewsSection,
     ArticlesSection
   },
+  computed: {
+    articles() {
+      return this.$store.state.articles.articles;
+    },
+  },
   created() {
-    // обращаемся к стору, вызываем метод getArticles оттуда, будет нужен, но попозже
     this.$store.dispatch('articles/getNew')
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .content__section-title {
   margin-top: 0;
   margin-bottom: 40px;

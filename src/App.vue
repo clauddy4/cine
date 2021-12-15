@@ -54,20 +54,6 @@ body {
   overflow: hidden;
 }
 
-//h2 {
-//  font-size: 42px;
-//  font-weight: 400;
-//  text-transform: uppercase;
-//  text-decoration: underline;
-//  margin-bottom: 40px;
-//}
-//
-//h1 {
-//  margin-bottom: 70px;
-//  font-weight: bold;
-//  font-size: 48px;
-//}
-
 .main-container {
   max-width: 1200px;
   margin: 130px auto;

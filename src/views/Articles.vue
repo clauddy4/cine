@@ -2,23 +2,25 @@
   <div class="main-container">
     <div class="content">
       <h1 class="content__title">Статьи</h1>
-      <ArticlesSection />
+      <ArticlesSection :articles="articles" />
     </div>
   </div>
 </template>
 
 <script>
-// import ArticleCard from "@/components/ArticleCard"
 import ArticlesSection from "../components/ArticlesSection";
 
 export default {
   name: "Articles",
   components: {
     ArticlesSection
-    // ArticleCard,
+  },
+  computed: {
+    articles() {
+      return this.$store.state.articles.articles;
+    },
   },
   created() {
-    // обращаемся к стору, вызываем метод getArticles оттуда, будет нужен, но попозже
     this.$store.dispatch('articles/getArticles')
   }
 };

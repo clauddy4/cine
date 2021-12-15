@@ -17,18 +17,16 @@ export default {
   components: {
     ArticleCard
   },
-  computed: {
-    articles() {
-      return this.$store.state.articles.articles;
-    },
-  },
+  props: {
+    articles: Array
+  }
 }
 </script>
 
 <style scoped>
 .articles__wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>

@@ -10,6 +10,7 @@
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
           <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>
+          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Login' }">Авторам</router-link></li>
           <li class="site-navigation-item">
             <a class="site-navigation-link" href="#">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
