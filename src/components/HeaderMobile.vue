@@ -11,6 +11,9 @@
       <li><router-link class="menu__item" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'Movies' }">Фильмы</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'About' }">О проекте</router-link></li>
+      <li v-if="!isAuth"><router-link class="menu__item" :to="{ name: 'Login' }">Войти</router-link></li>
+      <li v-if="isAuth"><router-link class="menu__item" :to="{ name: 'ArticleAdd' }">Авторам</router-link></li>
+      <li v-if="isAuth"><span @click="logout" class="menu__item">Выйти</span></li>
       <li>
         <a class="menu__item" href="#">
           <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +27,20 @@
 
 <script>
 export default {
-  name: "HeaderMobile"
+  computed: {
+    isAuth() {
+      return localStorage.getItem('accessToken')
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout')
+          .then(() => {
+            this.$router.push({name: 'Home'});
+            window.location.reload();
+          })
+    }
+  }
 }
 </script>
 

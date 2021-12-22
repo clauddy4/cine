@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-container">
+  <div class="detail-container" v-if="article">
     <div class="detail-container__article article">
       <h1 class="article__title">{{ article.title }}</h1>
       <div class="article__subtitle">

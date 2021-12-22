@@ -1,25 +1,32 @@
 <template>
   <div class="login">
     <h2 class="content__section-title">Войти</h2>
+
     <UiInput
         v-model="login"
         placeholder="Логин или почта"
     />
     <UiInput
+        password
         v-model="password"
         placeholder="Пароль"
     />
     <span>
       Ещё нет аккаунта?
       <router-link
-        :to="{name: 'Registration'}"
-        class="link login__link"
+          :to="{name: 'Registration'}"
+          class="link login__link"
       >
         Создайте
       </router-link>
     </span>
 
-    <UiBtn @click="handleLogin">Войти</UiBtn>
+    <UiBtn
+        @click="handleLogin"
+        :disabled="!login || !password"
+    >
+      Войти
+    </UiBtn>
   </div>
 </template>
 
@@ -39,17 +46,27 @@ export default {
         'login': this.login,
         'password': this.password
       }
-
       this.$store.dispatch('auth/login', userData)
           .then((data) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-
             this.$router.push({name: 'Home'});
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error)
           });
     }
+  },
+  computed: {
+    user() {
+      return this.$store.state.auth.user
+    },
+    userToken() {
+      return localStorage.getItem('accessToken')
+    }
+  },
+  created() {
+    this.$store.dispatch('auth/authUser')
   }
 }
 </script>

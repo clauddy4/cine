@@ -41,5 +41,11 @@ export default {
                 return data;
             })
         },
+        addArticle({dispatch}, articleData) {
+            return axios.post('/api/admin/article/create', articleData)
+                .then(() => {
+                    dispatch('getArticles')
+                })
+        },
     }
 }

@@ -1,18 +1,17 @@
 <template>
-  <div>
     <input
         :placeholder="placeholder"
         v-model="modelValue"
         @focus="isFocused = true"
         @blur="isFocused = false"
         :disabled="disabled"
+        :type="password ? 'password' : 'input'"
         class="ui-input"
         :class="{
                   'ui-input__focused': isFocused,
                   'ui-input__disabled': disabled
         }"
     />
-  </div>
 </template>
 
 <script>
@@ -30,6 +29,10 @@ export default {
       type: Boolean,
       default: false
     },
+    password: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

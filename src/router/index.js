@@ -1,13 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Articles from "../views/Articles.vue";
-import ArticleDetail from "../views/ArticleDetail.vue";
+import Home from "../views/Home";
+import Articles from "../views/Articles";
+import ArticleDetail from "../views/ArticleDetail";
 import Reviews from "../views/Reviews";
 import About from "../views/About";
 import Login from "../views/Login";
 import Registration from "../views/Registration";
-// import store from '../store'
+import ArticleAdd from "../views/ArticleAdd";
 
 Vue.use(VueRouter);
 
@@ -43,7 +43,12 @@ const routes = [
         component: About,
     },
     {
-        path: "/article/:id",
+        path: "/article/add",
+        name: "ArticleAdd",
+        component: ArticleAdd,
+    },
+    {
+        path: "/article/detail/:id",
         name: "ArticleDetail",
         component: ArticleDetail,
     },
@@ -54,20 +59,5 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes,
 });
-
-// router.beforeEach((to, from, next) => {
-//     store.dispatch('auth/authUser')
-//         .then(() => {
-//             next({name: 'Home'})
-//         })
-//         .catch(() => {
-//             if (to.name !== 'Login') {
-//                 next({name: 'Login'});
-//             } else {
-//                 next();
-//             }
-//         })
-// })
-
 
 export default router;

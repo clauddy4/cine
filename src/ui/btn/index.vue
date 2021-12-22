@@ -4,6 +4,7 @@
              :target="href ? '_blank' : ''"
              :to="to"
              class="ui-btn"
+             :class="disabled ? 'ui-btn__disabled' : ''"
              @click="click"
   >
     <span class="ui-btn__content">
@@ -27,6 +28,10 @@ export default {
       type: Object,
       default: null
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     tag() {
@@ -41,7 +46,8 @@ export default {
   },
   methods: {
     click() {
-      this.$emit('click')
+      if (!this.disabled)
+        this.$emit('click')
     }
   }
 }
@@ -59,5 +65,12 @@ export default {
   padding: 15px 35px;
   color: #F1ECFF;
   font-weight: 700;
+
+  &__disabled {
+    background: #ccc;
+    cursor: none;
+    color: #eee
+  }
 }
+
 </style>

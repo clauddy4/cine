@@ -11,6 +11,7 @@
           placeholder="Email"
       />
       <UiInput
+          password
           v-model="password"
           placeholder="Пароль"
       />
@@ -38,7 +39,12 @@
         </router-link>
       </span>
 
-      <UiBtn @click="register">Зарегистрироваться</UiBtn>
+      <UiBtn
+          @click="register"
+          :disabled="!lastName || !firstName || !email || !userName || !password"
+      >
+        Зарегистрироваться
+      </UiBtn>
     </div>
 
   </div>

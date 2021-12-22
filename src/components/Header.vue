@@ -3,18 +3,37 @@
     <div class="container">
       <nav class="main-navigation">
         <router-link class="main-header-logo" :to="{ name: 'Home' }">
-          <img :src="require('@/assets/static/img/cine.svg')" alt="Logo" />
+          <img :src="require('@/assets/static/img/cine.svg')" alt="Logo"/>
         </router-link>
         <ul class="site-navigation">
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>
-          <li class="site-navigation-item"><router-link class="site-navigation-link" :to="{ name: 'Login' }">Авторам</router-link></li>
+          <li class="site-navigation-item">
+            <router-link class="site-navigation-link" :to="{ name: 'Home' }">Новое</router-link>
+          </li>
+          <li class="site-navigation-item">
+            <router-link class="site-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link>
+          </li>
+          <li class="site-navigation-item">
+            <router-link class="site-navigation-link" :to="{ name: 'Reviews' }">Рецензии</router-link>
+          </li>
+          <li class="site-navigation-item">
+            <router-link class="site-navigation-link" :to="{ name: 'About' }">О проекте</router-link>
+          </li>
+          <li v-if="!isAuth" class="site-navigation-item">
+            <router-link class="site-navigation-link" :to="{ name: 'Login' }">Войти</router-link>
+          </li>
+          <li v-if="isAuth" class="site-navigation-item">
+            <router-link class="site-navigation-link" :to="{ name: 'ArticleAdd' }">Авторам</router-link>
+          </li>
+          <li v-if="isAuth" class="site-navigation-item">
+            <span class="site-navigation-link" @click="logout">Выйти</span>
+          </li>
+
           <li class="site-navigation-item">
             <a class="site-navigation-link" href="#">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M23.6696 21.5777C24.1101 22.0183 24.1101 22.7327 23.6696 23.1733C23.229 23.6138 22.5146 23.6138 22.074 23.1733L18.1253 19.2245C17.6847 18.7839 17.6847 18.0696 18.1253 17.629C18.5659 17.1884 19.2802 17.1884 19.7208 17.629L23.6696 21.5777ZM11.0256 19.555C6.04092 19.555 2 15.5141 2 10.5293C2 5.54458 6.04092 1.50366 11.0256 1.50366C16.0104 1.50366 20.0513 5.54458 20.0513 10.5293C20.0513 15.5141 16.0104 19.555 11.0256 19.555ZM11.0256 17.2986C14.7642 17.2986 17.7949 14.2679 17.7949 10.5293C17.7949 6.79076 14.7642 3.76007 11.0256 3.76007C7.2871 3.76007 4.25641 6.79076 4.25641 10.5293C4.25641 14.2679 7.2871 17.2986 11.0256 17.2986Z" fill="#F1ECFF"/>
+                <path
+                    d="M23.6696 21.5777C24.1101 22.0183 24.1101 22.7327 23.6696 23.1733C23.229 23.6138 22.5146 23.6138 22.074 23.1733L18.1253 19.2245C17.6847 18.7839 17.6847 18.0696 18.1253 17.629C18.5659 17.1884 19.2802 17.1884 19.7208 17.629L23.6696 21.5777ZM11.0256 19.555C6.04092 19.555 2 15.5141 2 10.5293C2 5.54458 6.04092 1.50366 11.0256 1.50366C16.0104 1.50366 20.0513 5.54458 20.0513 10.5293C20.0513 15.5141 16.0104 19.555 11.0256 19.555ZM11.0256 17.2986C14.7642 17.2986 17.7949 14.2679 17.7949 10.5293C17.7949 6.79076 14.7642 3.76007 11.0256 3.76007C7.2871 3.76007 4.25641 6.79076 4.25641 10.5293C4.25641 14.2679 7.2871 17.2986 11.0256 17.2986Z"
+                    fill="#F1ECFF"/>
               </svg>
             </a>
           </li>
@@ -26,9 +45,18 @@
 
 <script>
 export default {
-  name: "Header",
-  data() {
-    return {
+  computed: {
+    isAuth() {
+      return !!localStorage.getItem('accessToken')
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout')
+          .then(() => {
+            this.$router.push({name: 'Home'});
+            window.location.reload();
+          })
     }
   }
 };
@@ -87,6 +115,7 @@ header {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .site-navigation-link:hover {
