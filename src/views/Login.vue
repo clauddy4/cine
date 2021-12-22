@@ -49,8 +49,9 @@ export default {
       this.$store.dispatch('auth/login', userData)
           .then((data) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+
             this.$router.push({name: 'Home'});
-            window.location.reload();
+            window.location.reload()
           })
           .catch((error) => {
             console.log(error)

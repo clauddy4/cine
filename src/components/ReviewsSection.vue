@@ -22,6 +22,9 @@ export default {
       return this.$store.state.articles.reviews;
     },
   },
+  created() {
+    this.$store.dispatch('articles/getReviews')
+  }
 }
 </script>
 

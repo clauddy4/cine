@@ -38,6 +38,8 @@ export default {
         login({ commit }, userData) {
             return axios.post('/api/auth/sign-in', userData)
                 .then(({ data }) => {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+
                     commit('SET_USER_DATA', data);
                     return data;
                 })
@@ -45,6 +47,8 @@ export default {
         authUser({commit}) {
             return axios.get('/api/admin/admin-protected' )
                 .then(({ data }) => {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+
                     console.log(data)
                     commit('SET_USER_INFO', data);
                     return data;

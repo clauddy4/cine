@@ -44,6 +44,8 @@ export default {
         addArticle({dispatch}, articleData) {
             return axios.post('/api/admin/article/create', articleData)
                 .then(() => {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+
                     dispatch('getArticles')
                 })
         },

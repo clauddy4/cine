@@ -15,10 +15,6 @@ export default {
   components: {
     ReviewsSection,
   },
-  created() {
-    // обращаемся к стору, вызываем метод getArticles оттуда, будет нужен, но попозже
-    this.$store.dispatch('articles/getReviews')
-  }
 };
 </script>
 

@@ -16,11 +16,20 @@
       :to="{ name: 'ArticleDetail', params: { id: article.id } }"
     >
       <img
+        v-if="article.thumbnailImage"
         :src="require('@/assets/static' + article.thumbnailImage)"
         alt="Article image"
         width="400"
         height="220"
         class="article__image"
+      />
+      <img
+          v-else
+          :src="require('/public/img/no-image.png')"
+          alt="Article image"
+          width="400"
+          height="220"
+          class="article__image"
       />
     </router-link>
   </div>

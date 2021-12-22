@@ -16,6 +16,12 @@ Vue.filter('formatDate', function(value) {
   }
 });
 
+const accessToken = localStorage.getItem('accessToken');
+
+if (accessToken) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+}
+
 axios.defaults.baseURL = 'https://localhost:5001/';
 
 new Vue({
