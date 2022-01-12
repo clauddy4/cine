@@ -56,20 +56,27 @@ export default {
 <style scoped lang="scss">
 .ui-btn {
   display: block;
+  margin-left: 0;
+  margin-right: auto;
   border: none;
   outline: none;
   cursor: pointer;
-  margin: 16px 0;
-  background: linear-gradient(90deg, #616EB5 0%, rgba(253, 58, 233, 0.76) 100%);
-  border-radius: 18px;
-  padding: 15px 35px;
+  background: #112877;
+  padding: 9px 103px;
   color: #F1ECFF;
-  font-weight: 700;
-
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 110%;
+  letter-spacing: -0.09em;
   &__disabled {
-    background: #ccc;
-    cursor: none;
+    background: #112877;
+    cursor: pointer;
     color: #eee
+  }
+
+  &:hover {
+    background: #1737a4;
   }
 }
 

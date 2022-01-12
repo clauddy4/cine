@@ -5,7 +5,7 @@
         @focus="isFocused = true"
         @blur="isFocused = false"
         :disabled="disabled"
-        :type="password ? 'password' : 'input'"
+        :type="password ? 'password' : 'text'"
         class="ui-input"
         :class="{
                   'ui-input__focused': isFocused,
@@ -52,14 +52,16 @@ export default {
 
 <style lang="scss">
 .ui-input {
-  display: block;
-  margin-bottom: 16px;
+  height: 23px;
+  margin-bottom: 40px;
   padding: 10px 8px;
-  border: 1px solid;
+  border: none;
+  box-shadow: 0 0 0 1px #000000;
   border-radius: 4px;
-  width: 250px;
-  font-weight: 600;
-  font-size: 14px;
+  max-width: 640px;
+  width: 100%;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
 
   &:focus-visible {
     outline: none;
@@ -70,7 +72,7 @@ export default {
   }
 
   &__focused {
-    border: 2px solid #112877;
+    box-shadow: 0 0 0 1px #112877;
     background: #F0FDFF;
   }
 }

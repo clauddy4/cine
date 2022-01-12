@@ -1,68 +1,50 @@
 <template>
   <div class="article-add container">
-    <h1 class="article-add__title">Добавление</h1>
-<!--    <div class="article-add__tabs">-->
-<!--      <span-->
-<!--          v-for="(tab, index) in tabs"-->
-<!--          :key="index"-->
-<!--          @click="selectedTab = tab"-->
-<!--          class="article-add__tab"-->
-<!--          :class="{ 'article-add__tab-active': selectedTab === tab }"-->
-<!--      >-->
-<!--        {{ tab }}-->
-<!--      </span>-->
-<!--    </div>-->
+    <h1 class="article-add__title">{{article.category.name}}: редактирование</h1>
 
     <div class="article-add__input-container">
-      <UiInput
-          class="article-add__input"
-          v-model="title"
-          placeholder="Заголовок"
+      <input
+          id="input-title"
+          class="article-add__input article-add__input-title"
+          v-model="article.title"
       />
 
       <textarea
+          id="input-text"
           class="article-add__input"
-          v-model="content"
-          placeholder="Текст"
+          v-model="article.content"
       ></textarea>
 
       <div class="article-add__image">
         <span>Загрузите картинку:</span>
-        <input type="file" accept="image/*">
+        <input id="input-image" type="file" accept="image/*">
       </div>
 
-      <div class="article-add__choice">
-        <span>Выберите раздел:</span>
-        <ul>
-          <li
-              v-for="(tab, index) in tabs"
-              :key="index"
-              @click="selectedTab = tab"
-              class="article-add__tab"
-              :class="{ 'article-add__tab-active': selectedTab === tab }"
-          >
-            {{ tab }}
-          </li>
-        </ul>
-<!--        <select>-->
-<!--            <option-->
-<!--                v-for="(tab, index) in tabs"-->
-<!--                :key="index"-->
-<!--                @click="selectedTab = tab"-->
-<!--                class="article-add__tab"-->
-<!--                :class="{ 'article-add__tab-active': selectedTab === tab }"-->
-<!--            >-->
-<!--              {{ tab }}-->
-<!--            </option>-->
-<!--        </select>-->
-      </div>
+<!--      <div class="article-add__choice">-->
+<!--        <span>Выберите раздел:</span>-->
+<!--        <ul>-->
+<!--          <li-->
+<!--              @click="selectedTab = 'Статья'"-->
+<!--              class="article-add__tab"-->
+<!--              :class="{ 'article-add__tab-active': articleType === 'Статья' }"-->
+<!--          >-->
+<!--            Статья-->
+<!--          </li>-->
+<!--          <li-->
+<!--              @click="selectedTab = 'Рецензия'"-->
+<!--              class="article-add__tab"-->
+<!--              :class="{ 'article-add__tab-active': articleType === 'Рецензия' }"-->
+<!--          >-->
+<!--            Рецензия-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
     </div>
 
     <div class="article-add__buttons">
       <div class="article-add__btn">
         <UiBtn
-            @click="addArticle"
-            :disabled="!content || !title"
+          @click="editArticle"
         >
           Сохранить
         </UiBtn>
@@ -74,34 +56,37 @@
         </UiBtn>
       </div>
 
-<!--      <div class="article-add__btn article-add__btn-delete">-->
-<!--        <UiBtn-->
-<!--            id="btn-delete"-->
-<!--        >-->
-<!--          Удалить-->
-<!--        </UiBtn>-->
-<!--      </div>-->
+      <div class="article-add__btn article-add__btn-delete">
+        <UiBtn
+            id="btn-delete"
+            @click="showModal"
+        >
+          Удалить
+        </UiBtn>
+      </div>
     </div>
-<!--    <div id="modal-delete" class="modal">-->
-<!--      &lt;!&ndash; Modal content &ndash;&gt;-->
-<!--      <div class="modal-content">-->
-<!--        <p>Вы уверены, что хотите удалить запись?</p>-->
-<!--        <div class="modal-buttons">-->
-<!--          <UiBtn-->
-<!--              class="modal-delete"-->
-<!--          >-->
-<!--            Удалить-->
-<!--          </UiBtn>-->
-<!--          <UiBtn-->
-<!--              id="close"-->
-<!--              class="modal-cancel"-->
-<!--          >-->
-<!--            Отменить-->
-<!--          </UiBtn>-->
-<!--        </div>-->
-<!--      </div>-->
+    <div id="modal-delete" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <p>Вы уверены, что хотите удалить запись?</p>
+        <div class="modal-buttons">
+          <UiBtn
+              class="modal-delete"
+              @click="deleteArticle"
+          >
+            Удалить
+          </UiBtn>
+          <UiBtn
+              id="close"
+              class="modal-cancel"
+              @click="hideModal"
+          >
+            Отменить
+          </UiBtn>
+        </div>
+      </div>
 
-<!--    </div>-->
+    </div>
   </div>
 
   <!-- The Modal -->
@@ -110,23 +95,28 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tabs: ['Статья', 'Рецензия'],
-      selectedTab: 'Статья',
-      title: '',
-      content: ''
+  computed: {
+    article() {
+      return this.$store.state.article.article;
     }
   },
+  created() {
+    this.$store.dispatch('article/getArticle', [this.$route.params.id]);
+  },
+
   methods: {
-    addArticle() {
+    editArticle() {
       let articleData = {
-        "title": this.title,
-        "content": this.content,
-        "type": this.selectedTab === 'Статья' ? 'Article' : 'Review'
+        id: this.article.id,
+        title: this.article.title,
+        content: this.article.content,
+        createdAt: this.article.createdAt,
+        type: this.article.category.type,
+        thumbnailImage: this.article.thumbnailImage,
+        image: this.article.image
       }
 
-      this.$store.dispatch('articles/addArticle', articleData)
+      this.$store.dispatch('articles/editArticle', articleData)
           .then(() => {
             this.$router.push({name: 'ArticlesAuthorList'});
           })
@@ -136,13 +126,22 @@ export default {
     },
 
     deleteArticle() {
-      this.$store.dispatch('articles/deleteArticle')
+      this.$store.dispatch('articles/deleteArticle', this.article.id)
           .then(() => {
-            this.$router.push({name: 'Home'});
+            this.$router.push({name: 'ArticlesAuthorList'});
           })
           .catch((error) => {
             console.log(error)
           });
+    },
+
+    showModal() {
+      var modal = document.getElementById("modal-delete");
+      modal.style.display = "flex";
+    },
+    hideModal() {
+      var modal = document.getElementById("modal-delete");
+      modal.style.display = "none";
     }
   }
 };
@@ -202,6 +201,32 @@ export default {
     display: flex;
     flex-direction: column;
     margin-bottom: 50px;
+
+    .article-add__input-title {
+      height: 23px;
+      margin-bottom: 40px;
+      padding: 10px 8px;
+      border-radius: 4px;
+      width: 95%;
+      max-width: 100%;
+      box-shadow: none;
+      border: 2px solid #444444;
+      font-family: Roboto, sans-serif;
+      font-size: 16px;
+
+      &:focus-visible {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #444
+      }
+
+      &__focused {
+        box-shadow: 0 0 0 1px #112877;
+        background: #F0FDFF;
+      }
+    }
   }
 
   &__input {
@@ -451,8 +476,8 @@ export default {
   }
 
   .modal-delete {
-      margin-right: 20px;
-      background: #E43B47 !important;
+    margin-right: 20px;
+    background: #E43B47 !important;
     &:hover {
       background: #cf1d29 !important;
     }

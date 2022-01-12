@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h2 class="content__section-title">Войти</h2>
+    <h2 class="content__section-title">Вход</h2>
 
     <UiInput
         v-model="login"
@@ -11,15 +11,15 @@
         v-model="password"
         placeholder="Пароль"
     />
-    <span>
-      Ещё нет аккаунта?
-      <router-link
-          :to="{name: 'Registration'}"
-          class="link login__link"
-      >
-        Создайте
-      </router-link>
-    </span>
+<!--    <span>-->
+<!--      Ещё нет аккаунта?-->
+<!--      <router-link-->
+<!--          :to="{name: 'Registration'}"-->
+<!--          class="link login__link"-->
+<!--      >-->
+<!--        Создайте-->
+<!--      </router-link>-->
+<!--    </span>-->
 
     <UiBtn
         @click="handleLogin"
@@ -74,11 +74,16 @@ export default {
 
 <style scoped lang="scss">
 .login {
+  max-width: 640px;
   margin: 100px auto;
   text-align: -webkit-center;
 
   &__link {
     color: #FD3AE9
+  }
+
+  .content__section-title {
+    text-decoration: none;
   }
 }
 </style>

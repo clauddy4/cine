@@ -16,7 +16,7 @@
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Home' }">Новое</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Articles' }">Статьи</router-link></li>
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
-            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Movies' }">Фильмы</router-link></li>
+<!--            <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'Movies' }">Фильмы</router-link></li>-->
           </ul>
           <ul class="footer-navigation">
             <li class="footer-navigation-item"><router-link class="footer-navigation-link" :to="{ name: 'About' }">О проекте</router-link></li>

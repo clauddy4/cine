@@ -11,8 +11,7 @@
       <li><router-link class="menu__item" :to="{ name: 'Reviews' }">Рецензии</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'Movies' }">Фильмы</router-link></li>
       <li><router-link class="menu__item" :to="{ name: 'About' }">О проекте</router-link></li>
-      <li v-if="!isAuth"><router-link class="menu__item" :to="{ name: 'Login' }">Войти</router-link></li>
-      <li v-if="isAuth"><router-link class="menu__item" :to="{ name: 'ArticleAdd' }">Авторам</router-link></li>
+      <li v-if="isAuth"><router-link class="menu__item" :to="{ name: 'ArticlesAuthorList' }">Профиль</router-link></li>
       <li v-if="isAuth"><span @click="logout" class="menu__item">Выйти</span></li>
       <li>
         <a class="menu__item" href="#">
