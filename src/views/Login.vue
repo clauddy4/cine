@@ -50,7 +50,7 @@ export default {
           .then((data) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
 
-            this.$router.push({name: 'Home'});
+            this.$router.push({name: 'ArticlesAuthorList'});
             window.location.reload()
           })
           .catch((error) => {
