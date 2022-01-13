@@ -56,7 +56,11 @@ export default {
         },
 
         addArticle({dispatch}, articleData) {
-            return axios.post('/api/admin/article/create', articleData)
+            return axios.post('/api/admin/article/create', articleData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
                 .then(() => {
                     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
                     dispatch('getArticlesByAuthor')
@@ -64,7 +68,11 @@ export default {
         },
 
         editArticle({dispatch}, articleData) {
-            return axios.put('/api/admin/article/edit', articleData)
+            return axios.put('/api/admin/article/edit', articleData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
                 .then(() => {
                     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
                     dispatch('getArticlesByAuthor')

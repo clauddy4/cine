@@ -1,4 +1,4 @@
-<template>
+<template v-if="article">
   <div class="article-add container">
     <h1 class="article-add__title">{{article.category.name}}: редактирование</h1>
 
@@ -16,10 +16,45 @@
       ></textarea>
 
       <div class="article-add__image">
-        <span>Загрузите картинку:</span>
-        <input id="input-image" type="file" accept="image/*">
+        <span>Загрузить другую картинку:</span>
+        <input type="file" accept="image/*" name="image" id="image" @change="imageSelected">
       </div>
 
+<!--      <div class="article-add__choice">-->
+<!--        <span>Изменить раздел на:</span>-->
+<!--        <ul>-->
+<!--            <li v-if="article.category.name === 'Статья'"-->
+<!--                @click="selectedTab = 'Рецензия'"-->
+<!--                class="article-add__tab"-->
+<!--                :class="{ 'article-add__tab-active': selectedTab === 'Рецензия' }"-->
+<!--            >-->
+<!--              Рецензия-->
+<!--            </li>-->
+<!--            <li v-else-->
+<!--                @click="selectedTab = 'Статья'"-->
+<!--                class="article-add__tab"-->
+<!--                :class="{ 'article-add__tab-active': selectedTab === 'Статья' }"-->
+<!--            >-->
+<!--              Статья-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--      </div>-->
+
+<!--      <div class="article-add__choice">-->
+<!--        <span>Выберите раздел:</span>-->
+<!--        <ul>-->
+<!--          <li-->
+<!--              v-for="(tab, index) in data.tabs"-->
+<!--              :key="index"-->
+<!--              @click="clickOnTab"-->
+<!--              class="article-add__tab"-->
+<!--              :class="{ 'article-add__tab-active': data.currentTab === tab }"-->
+<!--          >-->
+<!--            {{ tab }}-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      <p>{{data.currentTab}}</p>-->
 <!--      <div class="article-add__choice">-->
 <!--        <span>Выберите раздел:</span>-->
 <!--        <ul>-->
@@ -65,8 +100,8 @@
         </UiBtn>
       </div>
     </div>
+
     <div id="modal-delete" class="modal">
-      <!-- Modal content -->
       <div class="modal-content">
         <p>Вы уверены, что хотите удалить запись?</p>
         <div class="modal-buttons">
@@ -85,38 +120,53 @@
           </UiBtn>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <!-- The Modal -->
+  </div>
 
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      selectedTab: ''
+    }
+  },
   computed: {
     article() {
       return this.$store.state.article.article;
-    }
+    },
   },
+
   created() {
     this.$store.dispatch('article/getArticle', [this.$route.params.id]);
   },
 
   methods: {
     editArticle() {
-      let articleData = {
-        id: this.article.id,
-        title: this.article.title,
-        content: this.article.content,
-        createdAt: this.article.createdAt,
-        type: this.article.category.type,
-        thumbnailImage: this.article.thumbnailImage,
-        image: this.article.image
+      let fd = new FormData();
+
+      fd.append('id', this.article.id);
+      fd.append('title', this.article.title);
+      fd.append('content', this.article.content);
+
+      if (this.selectedFile !== null) {
+        fd.append('image', this.selectedFile);
       }
 
-      this.$store.dispatch('articles/editArticle', articleData)
+      fd.append('type', this.article.category.type);
+      // let articleData = {
+      //   id: this.article.id,
+      //   title: this.article.title,
+      //   content: this.article.content,
+      //   createdAt: this.article.createdAt,
+      //   type: this.article.category.type,
+      //   thumbnailImage: this.article.thumbnailImage,
+      //   image: this.article.image
+      // }
+
+      this.$store.dispatch('articles/editArticle', fd)
           .then(() => {
             this.$router.push({name: 'ArticlesAuthorList'});
           })
@@ -142,7 +192,30 @@ export default {
     hideModal() {
       var modal = document.getElementById("modal-delete");
       modal.style.display = "none";
-    }
+    },
+
+    getTab() {
+      console.log(this.article.category.name );
+      if (this.article.category.name === 'Статья') {
+        return 'Рецензия';
+      }
+      else {
+        return 'Статья';
+      }
+    },
+
+    clickOnTab() {
+      if (this.article.category.type ) {
+        this.data.currentTab = this.data.tabs[1];
+      }
+      else {
+        this.data.currentTab = this.data.tabs[0];
+      }
+    },
+
+    imageSelected(event) {
+      this.selectedFile = event.target.files[0];
+    },
   }
 };
 

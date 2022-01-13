@@ -12,15 +12,13 @@
           {{ article.content }}
         </p>
         <img
-            :src="require('@/assets/static' + article.image)"
+            v-if="article.image"
+            :src="imagePath"
             alt="Article image"
             width="800"
             height="440"
             class="article__image"
         />
-        <p class="article__text">
-          {{ article.content }}
-        </p>
       </div>
     </div>
     <Share />
@@ -39,6 +37,9 @@ export default {
     article() {
       return this.$store.state.article.article;
     },
+    imagePath() {
+      return 'https://localhost:5001' + this.article.image;
+    }
   },
   created() {
     this.$store.dispatch('article/getArticle', [this.$route.params.id]);

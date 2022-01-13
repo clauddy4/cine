@@ -49,19 +49,40 @@ const routes = [
         path: "/article/add",
         name: "ArticleAdd",
         component: ArticleAdd,
+        beforeEnter(to, from, next) {
+            if (isAuth()) {
+                next();
+            } else {
+                next('/');
+            }
+        }
     },
     {
         path: "/article/edit/:id",
         name: "ArticleEdit",
         component: ArticleEdit,
+        beforeEnter(to, from, next) {
+            if (isAuth()) {
+                next();
+            } else {
+                next('/');
+            }
+        }
     },
     {
         path: "/articles/list",
         name: "ArticlesAuthorList",
         component: ArticlesAuthorList,
+        beforeEnter(to, from, next) {
+            if (isAuth()) {
+                next();
+            } else {
+                next('/');
+            }
+        }
     },
     {
-        path: "/article/detail/:id",
+        path: "/article/:id",
         name: "ArticleDetail",
         component: ArticleDetail,
     },
@@ -69,7 +90,7 @@ const routes = [
         path: '/search?Name=:name',
         name: "ArticleSearchResult",
         component: ArticleSearchResult,
-    },
+    }
 ];
 
 const router = new VueRouter({
@@ -77,5 +98,9 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes,
 });
+
+function isAuth() {
+    return !!localStorage.getItem('accessToken')
+}
 
 export default router;

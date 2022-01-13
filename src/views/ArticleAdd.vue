@@ -1,17 +1,6 @@
 <template>
   <div class="article-add container">
     <h1 class="article-add__title">Добавление</h1>
-<!--    <div class="article-add__tabs">-->
-<!--      <span-->
-<!--          v-for="(tab, index) in tabs"-->
-<!--          :key="index"-->
-<!--          @click="selectedTab = tab"-->
-<!--          class="article-add__tab"-->
-<!--          :class="{ 'article-add__tab-active': selectedTab === tab }"-->
-<!--      >-->
-<!--        {{ tab }}-->
-<!--      </span>-->
-<!--    </div>-->
 
     <div class="article-add__input-container">
       <UiInput
@@ -28,7 +17,7 @@
 
       <div class="article-add__image">
         <span>Загрузите картинку:</span>
-        <input type="file" accept="image/*">
+        <input type="file" accept="image/*" name="image" id="image" @change="imageSelected">
       </div>
 
       <div class="article-add__choice">
@@ -44,23 +33,13 @@
             {{ tab }}
           </li>
         </ul>
-<!--        <select>-->
-<!--            <option-->
-<!--                v-for="(tab, index) in tabs"-->
-<!--                :key="index"-->
-<!--                @click="selectedTab = tab"-->
-<!--                class="article-add__tab"-->
-<!--                :class="{ 'article-add__tab-active': selectedTab === tab }"-->
-<!--            >-->
-<!--              {{ tab }}-->
-<!--            </option>-->
-<!--        </select>-->
       </div>
     </div>
 
     <div class="article-add__buttons">
       <div class="article-add__btn">
         <UiBtn
+            type="submit"
             @click="addArticle"
             :disabled="!content || !title"
         >
@@ -73,38 +52,8 @@
           Отменить
         </UiBtn>
       </div>
-
-<!--      <div class="article-add__btn article-add__btn-delete">-->
-<!--        <UiBtn-->
-<!--            id="btn-delete"-->
-<!--        >-->
-<!--          Удалить-->
-<!--        </UiBtn>-->
-<!--      </div>-->
     </div>
-<!--    <div id="modal-delete" class="modal">-->
-<!--      &lt;!&ndash; Modal content &ndash;&gt;-->
-<!--      <div class="modal-content">-->
-<!--        <p>Вы уверены, что хотите удалить запись?</p>-->
-<!--        <div class="modal-buttons">-->
-<!--          <UiBtn-->
-<!--              class="modal-delete"-->
-<!--          >-->
-<!--            Удалить-->
-<!--          </UiBtn>-->
-<!--          <UiBtn-->
-<!--              id="close"-->
-<!--              class="modal-cancel"-->
-<!--          >-->
-<!--            Отменить-->
-<!--          </UiBtn>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--    </div>-->
   </div>
-
-  <!-- The Modal -->
 
 </template>
 
@@ -120,13 +69,22 @@ export default {
   },
   methods: {
     addArticle() {
-      let articleData = {
-        "title": this.title,
-        "content": this.content,
-        "type": this.selectedTab === 'Статья' ? 'Article' : 'Review'
-      }
+      let fd = new FormData();
+      //console.log(this.selectedFile);
+      fd.append('title', this.title);
+      fd.append('content', this.content);
+      fd.append('image', this.selectedFile);
+      fd.append('type', this.selectedTab === 'Статья' ? 'Article' : 'Review');
 
-      this.$store.dispatch('articles/addArticle', articleData)
+
+      // let articleData = {
+      //   "title": this.title,
+      //   "content": this.content,
+      //   "image": fd,
+      //   "type": this.selectedTab === 'Статья' ? 'Article' : 'Review'
+      // }
+
+      this.$store.dispatch('articles/addArticle', fd)
           .then(() => {
             this.$router.push({name: 'ArticlesAuthorList'});
           })
@@ -143,7 +101,11 @@ export default {
           .catch((error) => {
             console.log(error)
           });
-    }
+    },
+
+    imageSelected(event) {
+      this.selectedFile = event.target.files[0];
+    },
   }
 };
 

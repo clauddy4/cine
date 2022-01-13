@@ -11,13 +11,14 @@
       <span class="article__author">{{ article.user.firstName }} {{ article.user.lastName }}</span>
       <span class="article__date">{{ article.createdAt | formatDate}}</span>
     </div>
+
     <router-link
       class="link"
       :to="{ name: 'ArticleDetail', params: { id: article.id } }"
     >
       <img
         v-if="article.thumbnailImage"
-        :src="require('@/assets/static' + article.thumbnailImage)"
+        :src="imagePath"
         alt="Article image"
         width="400"
         height="220"
@@ -36,7 +37,14 @@
 </template>
 
 <script>
+//import article from "../store/modules/article";
+
 export default {
+  computed: {
+    imagePath() {
+      return 'https://localhost:5001' + this.article.thumbnailImage;
+    }
+  },
   name: "ArticleCard",
   props: {
     article: Object,
@@ -93,8 +101,8 @@ export default {
 }
 
 .article__image {
-  max-width: 400px;
-  max-height: 220px;
+  min-width: 400px;
+  min-height: 220px;
   width: 100%;
   height: 100%;
 }
@@ -102,6 +110,13 @@ export default {
 @media (max-width: 1024px) {
   .article {
     margin: 0 auto 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .article__image {
+    min-width: 100%;
+    min-height: 100%;
   }
 }
 </style>
