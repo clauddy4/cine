@@ -15,9 +15,19 @@
           placeholder="Текст"
       ></textarea>
 
-      <div class="article-add__image">
-        <span>Загрузите картинку:</span>
-        <input type="file" accept="image/*" name="image" id="image" @change="imageSelected">
+<!--      <div class="article-add__image">-->
+<!--        <span>Загрузите картинку:</span>-->
+<!--        <input type="file" accept="image/*" name="image" id="image" @change="imageSelected">-->
+<!--      </div>-->
+
+      <div class="article-add__image" v-for="(item,index) in items" :key="index">
+        <div class="article-add__image-upload">
+          <span>Загрузите картинку:</span>
+          <input type="file" accept="image/*" name="image" id="image" @change="onFileChange(item, $event)">
+        </div>
+        <div class="article-add__image-preview" v-if="item.image">
+          <img :src="item.image" width="200" height="110" alt="Загруженная картинка" />
+        </div>
       </div>
 
       <div class="article-add__choice">
@@ -64,7 +74,12 @@ export default {
       tabs: ['Статья', 'Рецензия'],
       selectedTab: 'Статья',
       title: '',
-      content: ''
+      content: '',
+      items: [
+        {
+          image: false,
+        },
+      ]
     }
   },
   methods: {
@@ -106,6 +121,22 @@ export default {
     imageSelected(event) {
       this.selectedFile = event.target.files[0];
     },
+
+    onFileChange(item, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(item, files[0]);
+      this.selectedFile = e.target.files[0];
+    },
+    createImage(item, file) {
+      var reader = new FileReader();
+
+      reader.onload = (e) => {
+        item.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 };
 
@@ -198,12 +229,13 @@ export default {
     margin-bottom: 50px;
 
     span {
+      display: block;
       margin-bottom: 10px;
       font-style: normal;
       font-weight: normal;
       font-size: 20px;
       line-height: 110%;
-      letter-spacing: -0.1em;
+      letter-spacing: -0.08em;
     }
 
     input {
@@ -211,12 +243,16 @@ export default {
       font-family: Roboto,Arial,sans-serif;
       color: #48484A;
     }
+
+    &-preview {
+      margin-top: 20px;
+    }
   }
 
   &__choice {
     display: flex;
     flex-direction: column;
-    max-width: 200px;
+    max-width: 250px;
     width: 100%;
 
     span {
@@ -225,7 +261,7 @@ export default {
       font-weight: normal;
       font-size: 20px;
       line-height: 110%;
-      letter-spacing: -0.1em;
+      letter-spacing: -0.08em;
     }
 
     ul {
@@ -395,7 +431,7 @@ export default {
     line-height: 110%;
     /* or 40px */
     text-align: center;
-    letter-spacing: -0.1em;
+    letter-spacing: -0.08em;
     color: #000000;
   }
 

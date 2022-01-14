@@ -15,30 +15,32 @@
           v-model="article.content"
       ></textarea>
 
-      <div class="article-add__image">
-        <span>Загрузить другую картинку:</span>
-        <input type="file" accept="image/*" name="image" id="image" @change="imageSelected">
+      <div class="article-add__image" v-for="(item,index) in items" :key="index">
+        <div class="article-add__image-upload" v-if="article.image">
+          <span>Текущая картинка:</span>
+          <img :src="imagePath" width="200" height="110" alt="Текущая картинка" />
+        </div>
+        <div class="article-add__image-preview">
+          <span>Загрузите картинку:</span>
+          <input type="file" accept="image/*" name="image" id="image" @change="onFileChange(item, $event)">
+        </div>
+        <div class="article-add__image-preview" v-if="item.image">
+          <span>Новая картинка:</span>
+          <img :src="item.image" width="200" height="110" alt="Загруженная картинка" />
+        </div>
       </div>
 
-<!--      <div class="article-add__choice">-->
-<!--        <span>Изменить раздел на:</span>-->
-<!--        <ul>-->
-<!--            <li v-if="article.category.name === 'Статья'"-->
-<!--                @click="selectedTab = 'Рецензия'"-->
-<!--                class="article-add__tab"-->
-<!--                :class="{ 'article-add__tab-active': selectedTab === 'Рецензия' }"-->
-<!--            >-->
-<!--              Рецензия-->
-<!--            </li>-->
-<!--            <li v-else-->
-<!--                @click="selectedTab = 'Статья'"-->
-<!--                class="article-add__tab"-->
-<!--                :class="{ 'article-add__tab-active': selectedTab === 'Статья' }"-->
-<!--            >-->
-<!--              Статья-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--      </div>-->
+      <div class="article-add__choice">
+        <div class="article-add__choice-current">
+          <span>Текущий раздел: <b>{{article.category.name}}</b></span>
+        </div>
+        <div class="article-add__choice-change">
+          <label>
+            <input type="checkbox" v-model="checkedSection">
+            Изменить раздел на: <b>{{newSection}}</b>
+          </label>
+        </div>
+      </div>
 
 <!--      <div class="article-add__choice">-->
 <!--        <span>Выберите раздел:</span>-->
@@ -130,13 +132,25 @@
 export default {
   data() {
     return {
-      selectedTab: ''
+      selectedTab: '',
+      items: [
+        {
+          image: false,
+        },
+      ],
+      checkedSection: false
     }
   },
   computed: {
     article() {
       return this.$store.state.article.article;
     },
+    imagePath() {
+      return 'https://localhost:5001' + this.article.image;
+    },
+    newSection() {
+      return this.article.category.name === 'Статья' ? 'Рецензия' : 'Статья';
+    }
   },
 
   created() {
@@ -155,16 +169,14 @@ export default {
         fd.append('image', this.selectedFile);
       }
 
-      fd.append('type', this.article.category.type);
-      // let articleData = {
-      //   id: this.article.id,
-      //   title: this.article.title,
-      //   content: this.article.content,
-      //   createdAt: this.article.createdAt,
-      //   type: this.article.category.type,
-      //   thumbnailImage: this.article.thumbnailImage,
-      //   image: this.article.image
-      // }
+      let categoryType = this.switchSection();
+
+      if (categoryType !== undefined) {
+        fd.append('type', categoryType);
+      }
+      else {
+        fd.append('type', this.article.category.type);
+      }
 
       this.$store.dispatch('articles/editArticle', fd)
           .then(() => {
@@ -173,6 +185,13 @@ export default {
           .catch((error) => {
             console.log(error)
           });
+    },
+
+    switchSection() {
+      if (this.checkedSection) {
+        let currentCategoryName = this.article.category.name;
+        return currentCategoryName === 'Статья' ? 'Review' : 'Article';
+      }
     },
 
     deleteArticle() {
@@ -216,6 +235,22 @@ export default {
     imageSelected(event) {
       this.selectedFile = event.target.files[0];
     },
+
+    onFileChange(item, e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(item, files[0]);
+      this.selectedFile = e.target.files[0];
+    },
+    createImage(item, file) {
+      var reader = new FileReader();
+
+      reader.onload = (e) => {
+        item.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 };
 
@@ -334,12 +369,13 @@ export default {
     margin-bottom: 50px;
 
     span {
+      display: block;
       margin-bottom: 10px;
       font-style: normal;
       font-weight: normal;
       font-size: 20px;
       line-height: 110%;
-      letter-spacing: -0.1em;
+      letter-spacing: -0.08em;
     }
 
     input {
@@ -347,21 +383,54 @@ export default {
       font-family: Roboto,Arial,sans-serif;
       color: #48484A;
     }
+
+    &-preview {
+      margin-top: 20px;
+    }
   }
 
   &__choice {
     display: flex;
     flex-direction: column;
-    max-width: 200px;
+    max-width: 350px;
     width: 100%;
 
     span {
+      display: block;
       margin-bottom: 10px;
       font-style: normal;
       font-weight: normal;
       font-size: 20px;
       line-height: 110%;
-      letter-spacing: -0.1em;
+      letter-spacing: -0.08em;
+    }
+
+    &-current {
+      margin-bottom: 20px;
+    }
+
+    &-change {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      input {
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    label {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 110%;
+      letter-spacing: -0.08em;
+    }
+
+    b {
+      letter-spacing: 0;
     }
 
     ul {
@@ -531,7 +600,7 @@ export default {
     line-height: 110%;
     /* or 40px */
     text-align: center;
-    letter-spacing: -0.1em;
+    letter-spacing: -0.08em;
     color: #000000;
   }
 
